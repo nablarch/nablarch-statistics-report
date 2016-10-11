@@ -1,0 +1,7 @@
+<FindBugsFilter>
+  <!-- カバレッジの問題で、equals及びhashCode未実装 -->
+  <Match>
+    <Class name="please.change.me.statistics.action.RequestInfoAggregateAction$AggregateKey" />
+    <Bug pattern="EQ_COMPARETO_USE_OBJECT_EQUALS" />
+  </Match>
+</FindBugsFilter>

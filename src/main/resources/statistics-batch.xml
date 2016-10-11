@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component-configuration
+    xmlns="http://tis.co.jp/nablarch/component-configuration"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://tis.co.jp/nablarch/component-configuration ./component-configuration.xsd">
+
+  <config-file file="statistics/schema.config" />
+  <config-file file="statistics/statistics.config" />
+
+  <!-- データベース設定 -->
+  <import file="statistics/db.xml" />
+  <!-- ハンドラ設定 -->
+  <import file="statistics/handler.xml" />
+  <!-- ファイル設定 -->
+  <import file="statistics/file.xml" />
+  <!-- オンラインアクセスログ解析設定 -->
+  <import file="statistics/onlineStatisticsDefinition.xml" />
+  <import file="statistics/date.xml" />
+  <!-- リクエストID設定 -->
+  <import file="statistics/requestId.xml" />
+
+  <!-- 初期化対象コンポーネント -->
+  <component name="initializer" class="nablarch.core.repository.initialization.BasicApplicationInitializer">
+    <property name="initializeList">
+      <list>
+        <component-ref name="duplicateProcessChecker" />
+        <component-ref name="businessDateProvider" />
+      </list>
+    </property>
+  </component>
+
+</component-configuration>
+
