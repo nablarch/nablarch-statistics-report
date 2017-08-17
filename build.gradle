@@ -62,7 +62,6 @@ dependencies {
 
 
 test {
-  ignoreFailures = true
   
   // find component definition
   classpath = files("${projectDir}/test/java") + files("${projectDir}/test/temp") + project.sourceSets.test.runtimeClasspath
