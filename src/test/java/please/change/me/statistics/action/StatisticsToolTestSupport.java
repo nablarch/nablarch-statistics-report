@@ -106,8 +106,8 @@ public class StatisticsToolTestSupport {
                 }
 
                 SqlPStatement createStatement = connection.prepareStatement("create table batch_request ("
-                        + " request_id char(8 char) not null,"
-                        + " process_active_flg char(1 char) default '0' not null ,"
+                        + " request_id char(8) not null,"
+                        + " process_active_flg char(1) default '0' not null ,"
                         + " primary key(request_id)"
                         + ")");
                 createStatement.execute();
