@@ -9,5 +9,4 @@
 
   <!-- テスト用の設定を上書き読み込み -->
   <import file="override/override.xml" />
-  <import file="testdb/unit-test-db.xml" />
 </component-configuration>

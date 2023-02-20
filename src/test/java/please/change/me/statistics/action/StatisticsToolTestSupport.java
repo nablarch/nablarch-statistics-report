@@ -65,7 +65,7 @@ public class StatisticsToolTestSupport {
     protected static int executeBatchAction(String actionClassName) {
         CommandLine commandLine = new CommandLine(
                 "-diConfig", "statistics-batch-for-test.xml",
-                "-requestPath", actionClassName + "/R1234567",
+                "-requestPath", actionClassName ,
                 "-userId", "statistics-user");
         return Main.execute(commandLine);
     }
@@ -76,7 +76,6 @@ public class StatisticsToolTestSupport {
         MemoryLogWriter.outputs.clear();
         systemProperties = new Properties();
         systemProperties.putAll(System.getProperties());
-        setupTable();
         cleaningTestDir(
                 "test/temp/online/log/online-parse-output",
                 "test/temp/online/log/online-temp",
@@ -87,39 +86,6 @@ public class StatisticsToolTestSupport {
     @After
     public void after() {
         System.setProperties(systemProperties);
-    }
-
-    /** テストで使用するテーブルのセットアップ処理を行う。 */
-    private void setupTable() {
-        // テーブルの作成
-        SimpleDbTransactionManager simpleDbTransactionManager = SystemRepository.get("unitTestTransaction");
-        new SimpleDbTransactionExecutor<Void>(simpleDbTransactionManager) {
-            @Override
-            public Void execute(AppDbConnection connection) {
-                // バッチリクエストの作成(drop -> create)
-                SqlPStatement statement = connection.prepareStatement("drop table batch_request");
-                try {
-                    statement.execute();
-                } catch (SqlStatementException e) {
-                    // nop
-                    e.printStackTrace();
-                }
-
-                SqlPStatement createStatement = connection.prepareStatement("create table batch_request ("
-                        + " request_id char(8) not null,"
-                        + " process_active_flg char(1) default '0' not null ,"
-                        + " primary key(request_id)"
-                        + ")");
-                createStatement.execute();
-
-                // バッチリクエストのデータ作成
-                SqlPStatement insert = connection.prepareStatement(
-                        "insert into batch_request (request_id) values (?)");
-                insert.setString(1, "R1234567");
-                insert.execute();
-                return null;
-            }
-        }.doTransaction();
     }
 
     /**
