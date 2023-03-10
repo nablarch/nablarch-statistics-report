@@ -108,7 +108,7 @@ public class RequestInfoAggregateAction extends BatchAction<DataRecord> {
 
         if (systemDateYm.equals(ymStr)) {
             // システム日付と同月のデータのみ年月集計を行う。
-            int ym = Integer.valueOf(ymStr);
+            int ym = Integer.parseInt(ymStr);
             addRequestInfo(ymAggregateResultHolder, inputData, AggregateUnit.YEAR_MONTH, ym);
         }
 
