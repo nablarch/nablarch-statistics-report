@@ -4,9 +4,6 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://tis.co.jp/nablarch/component-configuration ../../component-configuration.xsd">
 
-  <component name="loopHandler" class="nablarch.fw.handler.LoopHandler">
-    <property name="commitInterval" value="1" />
-    <property name="transactionFactory" ref="transactionFactory" />
-  </component>
+  <component name="loopHandler" class="nablarch.fw.handler.DbLessLoopHandler"/>
 
 </component-configuration>
