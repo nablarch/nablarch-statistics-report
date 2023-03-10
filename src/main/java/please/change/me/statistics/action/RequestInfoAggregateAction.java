@@ -62,6 +62,12 @@ public class RequestInfoAggregateAction extends BatchAction<DataRecord> {
     /** 年月単位のリクエスト情報ファイルのファイル名のプレフィックス */
     private static final String REQUEST_INFO_SUMMARY_YM_PREFIX = "REQUEST_INFO_SUMMARY_YM_";
 
+    /** プロセス名 */
+    private static final String PROCESS_NAME = "processName";
+
+    /** リクエストID */
+    private static final String REQUEST_ID = "requestId";
+
     /** 日、時間単位の集計結果を保持するMapオブジェクト */
     private final Map<AggregateKey, Aggregator> aggregateResultHolder = new TreeMap<AggregateKey, Aggregator>();
 
@@ -130,12 +136,12 @@ public class RequestInfoAggregateAction extends BatchAction<DataRecord> {
             int unitValue) {
 
         // プロセス名を保持する。
-        String processName = inputData.getString("processName");
+        String processName = inputData.getString(PROCESS_NAME);
         processNames.add(processName);
 
         // 集計単位のキー
         AggregateKey key = new AggregateKey(
-                inputData.getString("requestId"),
+                inputData.getString(REQUEST_ID),
                 processName,
                 aggregateUnit, unitValue);
 
@@ -204,9 +210,9 @@ public class RequestInfoAggregateAction extends BatchAction<DataRecord> {
 
         // CSVタイトルの出力
         Map<String, String> title = new HashMap<String, String>();
-        title.put("requestId", "リクエストID");
+        title.put(REQUEST_ID, "リクエストID");
         title.put("aggregateUnitValue", aggregateUnitValue);
-        title.put("processName", "プロセス名");
+        title.put(PROCESS_NAME, "プロセス名");
         title.put("requestCount", "処理リクエスト数");
         title.put("thresholdOverCount", "処理時間が閾値を超えたリクエスト数");
         title.put("average", "処理時間（平均）");
@@ -225,9 +231,9 @@ public class RequestInfoAggregateAction extends BatchAction<DataRecord> {
             Aggregator aggregator) {
 
         Map<String, Object> data = new HashMap<String, Object>();
-        data.put("requestId", aggregateKey.requestId);
+        data.put(REQUEST_ID, aggregateKey.requestId);
         data.put("aggregateUnitValue", aggregateKey.aggregateUnitValue);
-        data.put("processName", aggregateKey.processName);
+        data.put(PROCESS_NAME, aggregateKey.processName);
         data.put("requestCount", aggregator.requestCount);
         data.put("thresholdOverCount", aggregator.thresholdOverCount);
         data.put("average", aggregator.getAverageTime());
